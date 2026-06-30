@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import Database from 'better-sqlite3'
+import { createClient, type Client } from '@libsql/client'
 import jwt from 'jsonwebtoken'
 import { initDb } from '../src/db/schema.js'
 import { register, login } from '../src/modules/auth/auth.service.js'
@@ -7,18 +7,18 @@ import { register, login } from '../src/modules/auth/auth.service.js'
 const TEST_SECRET = 'test-secret'
 const OPTS = { secret: TEST_SECRET, saltRounds: 1 }
 
-function createTestDb(): Database.Database {
-  const db = new Database(':memory:')
-  db.pragma('foreign_keys = ON')
-  initDb(db)
+async function createTestDb(): Promise<Client> {
+  const db = createClient({ url: ':memory:' })
+  await db.execute('PRAGMA foreign_keys = ON')
+  await initDb(db)
   return db
 }
 
 describe('auth service', () => {
-  let db: Database.Database
+  let db: Client
 
-  beforeEach(() => {
-    db = createTestDb()
+  beforeEach(async () => {
+    db = await createTestDb()
   })
 
   describe('register', () => {

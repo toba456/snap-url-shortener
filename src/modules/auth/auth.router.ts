@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import Database from 'better-sqlite3'
+import type { Client } from '@libsql/client'
 import { getDb } from '../../db/index.js'
 import { register, login } from './auth.service.js'
 
@@ -31,7 +31,7 @@ function validateLogin(body: unknown) {
 }
 
 export function makeAuthRouter(
-  db: Database.Database = getDb(),
+  db: Client = getDb(),
   opts: ServiceOpts = {},
 ): Router {
   const router = Router()

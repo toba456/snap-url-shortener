@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import request from 'supertest'
 import express from 'express'
-import Database from 'better-sqlite3'
+import { createClient, type Client } from '@libsql/client'
 import { initDb } from '../src/db/schema.js'
 import { makeAuthRouter } from '../src/modules/auth/auth.router.js'
 import { errorHandler, notFoundHandler } from '../src/middleware/error-handlers.js'
@@ -9,14 +9,14 @@ import { errorHandler, notFoundHandler } from '../src/middleware/error-handlers.
 const TEST_SECRET = 'test-secret'
 const OPTS = { secret: TEST_SECRET, saltRounds: 1 }
 
-function createTestDb(): Database.Database {
-  const db = new Database(':memory:')
-  db.pragma('foreign_keys = ON')
-  initDb(db)
+async function createTestDb(): Promise<Client> {
+  const db = createClient({ url: ':memory:' })
+  await db.execute('PRAGMA foreign_keys = ON')
+  await initDb(db)
   return db
 }
 
-function createTestApp(db: Database.Database) {
+function createTestApp(db: Client) {
   const app = express()
   app.use(express.json())
   app.use(makeAuthRouter(db, OPTS))
@@ -28,8 +28,8 @@ function createTestApp(db: Database.Database) {
 describe('POST /auth/register', () => {
   let app: ReturnType<typeof createTestApp>
 
-  beforeEach(() => {
-    app = createTestApp(createTestDb())
+  beforeEach(async () => {
+    app = createTestApp(await createTestDb())
   })
 
   it('registro exitoso devuelve 201 con token y usuario', async () => {
@@ -93,7 +93,7 @@ describe('POST /auth/login', () => {
   let app: ReturnType<typeof createTestApp>
 
   beforeEach(async () => {
-    const db = createTestDb()
+    const db = await createTestDb()
     app = createTestApp(db)
     await request(app)
       .post('/auth/register')

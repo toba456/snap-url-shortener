@@ -1,13 +1,13 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import Database from 'better-sqlite3'
+import type { Client } from '@libsql/client'
 import { getDb } from '../../db/index.js'
 import { config } from '../../config.js'
 import type { AuthResult, LoginDto, RegisterDto, User, UserPublic } from './auth.types.js'
 
 export async function register(
   { email, password, name }: RegisterDto,
-  db: Database.Database = getDb(),
+  db: Client = getDb(),
   { secret = config.jwtSecret, saltRounds = 10 } = {},
 ): Promise<AuthResult> {
   const normalizedEmail = email.toLowerCase()
@@ -15,11 +15,11 @@ export async function register(
 
   let user: UserPublic
   try {
-    user = db
-      .prepare(
-        'INSERT INTO users (email, password_hash, name) VALUES (?, ?, ?) RETURNING id, email, name, created_at',
-      )
-      .get(normalizedEmail, passwordHash, name) as UserPublic
+    const result = await db.execute({
+      sql: 'INSERT INTO users (email, password_hash, name) VALUES (?, ?, ?) RETURNING id, email, name, created_at',
+      args: [normalizedEmail, passwordHash, name],
+    })
+    user = result.rows[0] as unknown as UserPublic
   } catch (err) {
     if (err instanceof Error && err.message.includes('UNIQUE constraint failed')) {
       throw new Error('El email ya está registrado')
@@ -36,14 +36,16 @@ export async function register(
 
 export async function login(
   { email, password }: LoginDto,
-  db: Database.Database = getDb(),
+  db: Client = getDb(),
   { secret = config.jwtSecret } = {},
 ): Promise<AuthResult> {
   const normalizedEmail = email.toLowerCase()
 
-  const row = db
-    .prepare('SELECT * FROM users WHERE email = ?')
-    .get(normalizedEmail) as User | undefined
+  const result = await db.execute({
+    sql: 'SELECT * FROM users WHERE email = ?',
+    args: [normalizedEmail],
+  })
+  const row = (result.rows[0] ?? null) as unknown as User | null
 
   if (!row) {
     throw new Error('Credenciales inválidas')
