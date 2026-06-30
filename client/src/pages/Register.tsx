@@ -29,26 +29,26 @@ export default function Register() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
+    <main className="min-h-screen bg-forest-dark flex items-center justify-center px-4">
       <div className="w-full max-w-md">
 
         {/* Brand mark */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 mb-4">
-            <span className="text-xl font-bold text-indigo-400">S</span>
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-forest/10 border border-forest/20 mb-4">
+            <span className="text-xl font-bold text-forest">S</span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
-            Crea tu cuenta en <span className="text-indigo-400">Snap</span>
+          <h1 className="text-2xl font-semibold tracking-tight text-cream">
+            Crea tu cuenta en <span className="text-forest">Snap</span>
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">Empieza a acortar URLs en segundos</p>
+          <p className="text-sm text-sage mt-1">Empieza a acortar URLs en segundos</p>
         </div>
 
         {/* Form card */}
-        <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 shadow-2xl shadow-black/40">
+        <div className="bg-forest/12 rounded-2xl border border-sage/20 p-8 shadow-2xl shadow-black/40">
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-1.5">
+              <label htmlFor="name" className="block text-sm font-medium text-cream/70 mb-1.5">
                 Nombre
               </label>
               <input
@@ -59,12 +59,12 @@ export default function Register() {
                 required
                 autoComplete="name"
                 placeholder="Tu nombre"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200"
+                className="w-full bg-forest-dark border border-sage/30 rounded-xl px-4 py-2.5 text-sm text-cream placeholder:text-sage/50 focus:outline-none focus:ring-2 focus:ring-forest/40 focus:border-forest transition-all duration-200"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-cream/70 mb-1.5">
                 Email
               </label>
               <input
@@ -75,12 +75,12 @@ export default function Register() {
                 required
                 autoComplete="email"
                 placeholder="tu@email.com"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200"
+                className="w-full bg-forest-dark border border-sage/30 rounded-xl px-4 py-2.5 text-sm text-cream placeholder:text-sage/50 focus:outline-none focus:ring-2 focus:ring-forest/40 focus:border-forest transition-all duration-200"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-cream/70 mb-1.5">
                 Contraseña
               </label>
               <input
@@ -91,7 +91,7 @@ export default function Register() {
                 required
                 autoComplete="new-password"
                 placeholder="••••••••"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all duration-200"
+                className="w-full bg-forest-dark border border-sage/30 rounded-xl px-4 py-2.5 text-sm text-cream placeholder:text-sage/50 focus:outline-none focus:ring-2 focus:ring-forest/40 focus:border-forest transition-all duration-200"
               />
             </div>
 
@@ -105,18 +105,18 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl py-2.5 transition-all duration-200 shadow-lg shadow-indigo-500/25 mt-1"
+              className="w-full bg-forest hover:bg-forest/85 active:bg-forest-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl py-2.5 transition-all duration-200 shadow-lg shadow-forest/25 mt-1"
             >
               {loading ? 'Creando cuenta...' : 'Crear cuenta gratis'}
             </button>
           </form>
         </div>
 
-        <p className="text-center text-sm text-zinc-500 mt-6">
+        <p className="text-center text-sm text-sage mt-6">
           ¿Ya tienes cuenta?{' '}
           <Link
             to="/login"
-            className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors duration-200"
+            className="text-forest hover:text-mist font-medium transition-colors duration-200"
           >
             Inicia sesión
           </Link>

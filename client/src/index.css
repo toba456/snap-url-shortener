@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-forest-dark: #404E3B;
+  --color-forest: #7B9669;
+  --color-sage: #6C8480;
+  --color-mist: #BAC8B1;
+  --color-cream: #E6E6E6;
+}
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
