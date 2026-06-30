@@ -9,9 +9,7 @@ export function buildConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const nodeEnv = env.NODE_ENV === 'production' ? 'production' : 'development'
   const isProduction = nodeEnv === 'production'
 
-  if (isProduction && !env.PORT) {
-    throw new Error('La variable de entorno PORT es obligatoria en producción')
-  }
+
   if (isProduction && !env.JWT_SECRET) {
     throw new Error('La variable de entorno JWT_SECRET es obligatoria en producción')
   }
