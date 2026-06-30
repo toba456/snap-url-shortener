@@ -17,7 +17,7 @@ export function buildConfig(env: NodeJS.ProcessEnv = process.env): Config {
   }
 
   return {
-    port: env.PORT ? parseInt(env.PORT, 10) : 3000,
+    port: parseInt(process.env.PORT || '3000', 10),
     env: nodeEnv,
     dbName: env.DB_NAME ?? 'snap.db',
     jwtSecret: env.JWT_SECRET ?? 'dev-secret-change-me',
