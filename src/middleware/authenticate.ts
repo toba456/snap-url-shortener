@@ -18,7 +18,7 @@ export function makeAuthenticate(secret: string = config.jwtSecret) {
 
     const token = authHeader.slice(7)
     try {
-      const payload = jwt.verify(token, secret) as TokenPayload
+      const payload = jwt.verify(token, secret) as unknown as TokenPayload;
       req.user = { id: payload.sub, email: payload.email, name: payload.name }
       next()
     } catch {
