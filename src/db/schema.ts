@@ -30,7 +30,7 @@ export async function initDb(db: Client): Promise<void> {
   )
 
   const result = await db.execute('PRAGMA table_info(urls)')
-  const cols = result.rows as Array<{ name: unknown }>
+const cols = result.rows as unknown as Array<{ name: unknown }>
   if (!cols.some((c) => c.name === 'user_id')) {
     await db.execute('ALTER TABLE urls ADD COLUMN user_id INTEGER REFERENCES users(id)')
   }
